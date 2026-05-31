@@ -57,13 +57,13 @@ Model policy:
 Recommended tools:
 
 - ComfyUI as the default open-source graph workflow for image and video generation.
-- Draw Things app/CLI as a Mac-native efficient option after verifying current GPL/free-app status and model license compatibility.
+- Draw Things as a Mac-native creative option after verifying local-only settings and model license compatibility. Treat it as free/local creator software, not the reproducible FOSS backend.
 - The concrete video-first setup commands live in `VIDEO_PROCESSING_SETUP_PLAN.md`.
 
 Model policy:
 
 - Image: prefer FLUX.1 Schnell or other permissive models. Do not default to FLUX Dev-style non-commercial licenses.
-- Video: use Wan2.2-class Apache-2.0 models only, limited to short low-resolution tests on this hardware.
+- Video: default to Wan2.2-class Apache-2.0 models, limited to short low-resolution tests on this hardware. Treat LTX-2/LTX-2.3 as opt-in because its custom license is not unrestricted.
 - Prefer MLX/CoreML/MPS-aware workflows and small/fast model variants.
 
 ## Implementation Order

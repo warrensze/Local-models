@@ -27,7 +27,10 @@ The user wants local AI coding models and diffusion/photo/video graphics workflo
   5. Ollama only as fallback/convenience.
 - Stock vLLM CPU should not be the default on this Mac.
 - ComfyUI is the default open-source media workflow.
-- Draw Things app/CLI is allowed as a Mac-native option after verifying current GPL/free-app status.
+- Draw Things is allowed as a Mac-native creator option, but not treated as the reproducible FOSS backend.
+- LTX-2/LTX-2.3 is no longer treated as unrestricted; its custom license has revenue/use restrictions, so it is opt-in research only.
+- Phosphene/LTX MLX tools are promising Apple Silicon alternatives, but not defaults on 16 GB unified memory.
+- WanGP/Wan2GP is strong for low-VRAM CUDA-style systems, but not Apple Silicon-first.
 - Default model size target is 4B-9B. 14B 4-bit is stretch. 30B/35B MoE is experimental on 16 GB RAM.
 - Default licenses allowed: Apache-2.0, MIT, BSD, GPL.
 - Avoid non-commercial, source-available, custom community, OpenRAIL-style, or use-restrictive model licenses unless explicitly approved.
@@ -60,7 +63,7 @@ If the user asks to continue implementation:
 2. Bootstrap Homebrew, ffmpeg, uv, Python 3.12, Git LFS, and the ComfyUI manual environment.
 3. Verify PyTorch MPS before downloading model files.
 4. Download only the Wan2.2 TI2V 5B starter files first.
-5. Smoke-test one short low-resolution ComfyUI video before adding larger models, interpolation, or LTX.
+5. Smoke-test one short low-resolution ComfyUI video before adding larger models, interpolation, Draw Things, Phosphene, or LTX.
 
 ## Important Constraint
 

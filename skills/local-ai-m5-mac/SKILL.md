@@ -40,10 +40,10 @@ Do not use stock vLLM CPU as the default on this Mac. Apple Silicon CPU support 
 ## Media Workflow
 
 - Use ComfyUI as the default open-source graph workflow for image and video generation.
-- Include Draw Things app/CLI as a Mac-native efficient option only after verifying current GPL/free-app status and model license compatibility.
+- Include Draw Things as a Mac-native creator option only after verifying local-only settings and model license compatibility; do not treat it as the reproducible FOSS backend unless its source/license is verified.
 - Prefer MLX/CoreML/MPS-aware workflows and small/fast models.
 - Image defaults should use FLUX.1 Schnell or other permissive models; do not default to FLUX Dev-style non-commercial licenses.
-- Video defaults should use Wan2.2-class Apache-2.0 models only, limited to short low-resolution tests on this hardware.
+- Video defaults should use Wan2.2-class Apache-2.0 models only, limited to short low-resolution tests on this hardware. Treat LTX-2/LTX-2.3 as opt-in research because its custom license is not unrestricted.
 
 ## Setup Procedure
 
