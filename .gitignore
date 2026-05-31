@@ -1,0 +1,79 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+
+# Node/package caches, in case web tooling is added later
+node_modules/
+.npm/
+.pnpm-store/
+
+# Local AI app clones and runtime state
+apps/
+downloads/
+logs/
+outputs/
+input/
+output/
+temp/
+tmp/
+
+# Model and media storage
+models/
+checkpoints/
+loras/
+vae/
+diffusion_models/
+text_encoders/
+clip/
+clip_vision/
+upscale_models/
+controlnet/
+embeddings/
+
+# Large model artifacts
+*.safetensors
+*.ckpt
+*.pt
+*.pth
+*.bin
+*.gguf
+*.onnx
+*.mlmodel
+*.mlpackage/
+
+# Generated media
+*.mp4
+*.mov
+*.mkv
+*.webm
+*.avi
+*.gif
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.wav
+*.mp3
+*.flac
+
+# Hugging Face and ML caches
+.cache/
+huggingface/
+hf-cache/
