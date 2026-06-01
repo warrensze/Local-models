@@ -4,7 +4,7 @@ Last updated: 2026-05-31
 
 ## Goal
 
-Set up a free/local video AI environment on this MacBook Air M5 with 16 GB unified memory. The first working target is still ComfyUI running locally with Apple Silicon MPS acceleration, video input/output support, and the official Wan2.2 TI2V 5B workflow.
+Set up a free/local video AI environment on this MacBook Air M5 with 16 GB unified memory. The creator-facing target is Draw Things for easier Mac-native experimentation. The reproducible backend target is still ComfyUI running locally with Apple Silicon MPS acceleration, video input/output support, and the official Wan2.2 TI2V 5B workflow.
 
 This plan is command-first, but staged so we can stop after each phase and verify before downloading large model files.
 
@@ -14,7 +14,7 @@ ComfyUI is still the best default for this repo because it is open-source, scrip
 
 Alternatives worth tracking:
 
-- **Draw Things**: likely the best easy Mac-native app for casual local image/video generation. It supports local creation and current models such as Wan 2.2 and LTX-2.3, but the main app is not treated here as a fully open-source, command-reproducible stack. Use it as an optional creative front end, not the repo's default foundation.
+- **Draw Things**: likely the best easy Mac-native app for casual local image/video generation. It supports local creation and current models such as Wan 2.2 and LTX-2.3, but the main app is not treated here as a fully open-source, command-reproducible stack. Use it as the creator UI, while ComfyUI stays the repo's reproducible foundation.
 - **Phosphene / LTX MLX tools**: promising Apple-Silicon-native LTX-2.3 video/audio generation. Not default on this 16 GB machine because LTX-2.3 is heavy, many workflows expect more unified memory, and the LTX-2 license has revenue/use restrictions.
 - **WanGP / Wan2GP**: excellent low-VRAM video UI on CUDA/Windows/Linux-style systems, but not the default for this Mac because upstream support is GPU/CUDA-oriented and Apple Silicon MPS support is not the main path.
 - **LTX Desktop**: official LTX app/editor, but macOS local mode is not the first target here; LTX docs currently point macOS users toward API mode or heavier local setups.
@@ -34,10 +34,11 @@ Observed in this workspace:
 
 ## Recommended Stack
 
-- **ComfyUI manual install** as the primary setup. It is reproducible, command-line friendly, and easy to repair.
+- **Draw Things** as the first creator UI for easier Mac-native experimentation.
+- **ComfyUI manual install** as the primary reproducible setup. It is command-line friendly and easy to repair.
 - **ComfyUI Desktop** as the easy fallback. Official docs support Apple Silicon and Homebrew install, but Desktop is still beta.
 - **Wan2.2 TI2V 5B** as the first video model. ComfyUI docs provide an official native workflow, and the 5B variant is the realistic first target on 16 GB unified memory.
-- **Draw Things** as an optional second lane for easier Mac-native experimentation after the reproducible ComfyUI base is documented.
+- **Draw Things CLI** as optional later tooling. The GUI app is enough for the immediate goal.
 - **LTX-2/LTX-2.3** as later research only. It is technically strong and has MLX-native community tooling, but it is not a default because of hardware pressure and custom license restrictions.
 - **VideoHelperSuite** for video load/save nodes.
 - **ffmpeg** for local video encoding/decoding.
@@ -49,7 +50,7 @@ Observed in this workspace:
 | --- | --- | --- | --- |
 | ComfyUI manual | Primary | Open-source, reproducible, broadest workflow/model support, official Wan2.2 templates | More setup and node complexity |
 | ComfyUI Desktop | Fallback/easy install | Official Mac app, Apple Silicon only, MPS setup flow | Beta; less transparent than manual setup |
-| Draw Things | Optional creator app | Free local Mac app, polished UX, supports image/video generation | Not the repo's reproducible FOSS command stack; model/app behavior can change through App Store releases |
+| Draw Things | Creator app | Free local Mac app, polished UX, supports image/video generation | Not the repo's reproducible FOSS command stack; model/app behavior can change through app releases |
 | Phosphene | Optional MLX/LTX experiment | Apple Silicon native, local panel/API, LTX-2.3 audio+video | LTX license is restricted; 16 GB RAM is below the comfortable tier |
 | WanGP/Wan2GP | Non-default | Great low-VRAM video super-app on CUDA-like systems | Not Apple Silicon first; may duplicate model downloads |
 | Diffusers scripts | Developer fallback | Direct Python pipelines, useful for testing model support | More brittle for creative daily use |
@@ -138,6 +139,12 @@ Start ComfyUI:
 python main.py --listen 127.0.0.1 --port 8188
 ```
 
+After setup, the repo launcher can also be used from `/Users/warren/Projects/Local-models`:
+
+```bash
+scripts/start-comfyui.sh
+```
+
 Open:
 
 ```text
@@ -164,17 +171,36 @@ python -m pip install -r custom_nodes/ComfyUI-VideoHelperSuite/requirements.txt
 
 Restart ComfyUI and confirm the manager loads. Use custom nodes sparingly: install only the nodes required by a chosen workflow, because custom nodes can execute Python code.
 
-## Phase 3A: Optional Draw Things Trial
+## Phase 3A: Draw Things Creator App
 
-Use this only if the immediate priority is easiest creative experimentation rather than a command-reproducible open-source setup.
+Use this when the immediate priority is easiest creative experimentation rather than a command-reproducible open-source setup.
 
-1. Install Draw Things from the Mac App Store.
-2. Keep cloud compute disabled for local-only testing.
-3. Test a small Wan 2.2 or supported video preset at the lowest practical resolution/frame count.
-4. Record model name, bit depth/quantization, settings, generation time, peak memory symptoms, and whether it crashes on 16 GB.
-5. If Draw Things is clearly more reliable or faster for this Mac, keep it as the creator UI while preserving ComfyUI as the reproducible workflow backend.
+Install the app:
+
+```bash
+brew install --cask draw-things
+```
+
+Launch it:
+
+```bash
+open -a "Draw Things"
+```
+
+First-run guidance:
+
+1. Keep cloud/API compute disabled for local-only testing unless explicitly choosing otherwise.
+2. Start with image generation, then image-to-video. Text-to-video without a source image is more likely to produce flashing colors on this hardware.
+3. Download only one small model path at a time. Do not duplicate ComfyUI's model downloads unless Draw Things requires its own format.
+4. Prefer FLUX.1 Schnell or another permissive lightweight image model for still-image creation.
+5. For video, test the smallest available Wan 2.2 local preset first, ideally a 5B, distilled, quantized, or "fast" variant.
+6. Start at 384x224 or 512x288, 16 to 33 frames, 8 fps, batch size 1.
+7. Record model name, bit depth/quantization, settings, generation time, memory symptoms, and whether it crashes on 16 GB.
+8. Keep Draw Things as the creator UI while preserving ComfyUI as the reproducible workflow backend.
 
 Do not download LTX-2.3 first on this 16 GB Mac. If testing LTX in Draw Things, use the smallest quantized/distilled option and expect instability until proven otherwise.
+
+Detailed Draw Things run notes live in `DRAW_THINGS_QUICKSTART.md`.
 
 ## Phase 4: Download Wan2.2 TI2V 5B Model Files
 
@@ -321,6 +347,7 @@ Do not install these until the 5B Wan2.2 workflow is stable:
 The video environment is ready when:
 
 - `ffmpeg` and `ffprobe` work.
+- Draw Things is installed and launches from `/Applications/Draw Things.app`.
 - ComfyUI starts locally at `http://127.0.0.1:8188`.
 - PyTorch reports MPS available.
 - ComfyUI Manager and VideoHelperSuite load without import errors.
@@ -334,7 +361,8 @@ The video environment is ready when:
 - ComfyUI GitHub: GPL-3.0 project, current official repository.
 - ComfyUI Wan2.2 official workflow docs: Wan2.2 5B template, required model files, low VRAM/offloading guidance.
 - Wan2.2 GitHub: Apache-2.0 model repository.
-- Draw Things App Store listing: free local creation and current Wan/LTX support.
+- Draw Things official site and Homebrew Cask: free local Mac app install path and current app version.
+- Draw Things CLI announcement: optional GPLv3 command-line tool via Homebrew tap.
 - Phosphene GitHub: MLX-native Apple Silicon panel and hardware tiering.
 - LTX-2 license: custom community license with revenue and use restrictions, so not unrestricted.
 - LTX-2 ComfyUI docs: ComfyUI integration, but CUDA 32 GB+ VRAM and 100 GB+ disk requirement for the documented local path.
